@@ -2,17 +2,23 @@
 // This is the main JS file for the project
 
 // jQuery event handler for click event
-var CAT1_CLICK_COUNT = 0;
-var CAT2_CLICK_COUNT = 0;
+var CATS = 2;
+var CLICK_COUNT = { "cat1": 0, "cat2" : 0 };
 
-$('#cat1').click(function(e) {
-  CAT1_CLICK_COUNT += 1;
-  console.log('clicked ' + CAT1_CLICK_COUNT + ' times');
-  $("#cat1-count").text("Clicked " + CAT1_CLICK_COUNT + " times");
-});
-
-$('#cat2').click(function(e) {
-  CAT2_CLICK_COUNT += 1;
-  console.log('clicked ' + CAT2_CLICK_COUNT + ' times');
-  $("#cat2-count").text("Clicked " + CAT2_CLICK_COUNT + " times");
-});
+for (var i = 0; i < CATS; i++) {
+  var cat = i + 1;
+  var eventID = '#cat' + cat;
+  var html = '<div id=' + "cat" + cat + ' class="col-md-6">';
+  html += '<h2>' + "Cat " + cat + '</h2>';
+  html += '<p id="cat' + cat + '-count">';
+  html += 'Clicked 0 times </p>';
+  html += '<img class="img-responsive" id="cat' + cat + '" src="img/cat' + cat + '.jpg"></img>';
+  $('#cats').append(html);
+  console.log(eventID);
+  $(eventID).click(cat,function(e) {
+    CLICK_COUNT["cat" + cat] ++;
+    var whichCat =eventID +'-count';
+    alert(whichCat + ", " + cat + ", " + CLICK_COUNT["cat" + cat]);
+    $(whichCat).text("Clicked " + CLICK_COUNT["cat" + cat] + " times");
+  });
+}
