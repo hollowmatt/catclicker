@@ -23,44 +23,15 @@ for (var i = 0; i < CATS; i++) {
   elem.appendChild(createPara("cat" + cat));
   elem.appendChild(createImg("cat" + cat));
   var clickNode = document.getElementById("img-cat" + cat);
-
-  // clickNode.addEventListener('click'), (function(catCopy){
-  //   return function() {
-  //     alert(catCopy);
-  //   }
-  // })(cat);
   
   (function(catCopy){
     $(clickNode).click(catCopy,function(e) {
-      alert('click' + catCopy);
       CLICK_COUNT["cat" + catCopy] ++;
       var whichCat = "which-cat" + catCopy;
-      $(whichCat).text("Clicked " + CLICK_COUNT["cat" + catCopy] + " times");
+      $("#" + whichCat).text("Clicked " + CLICK_COUNT["cat" + catCopy] + " times");
     });
   })(cat);
 }
-
-
-// <div class="row">
-//   <div class="col-md-6">
-//     <h2>
-//       Carson
-//     </h2>
-//     <p id="cat1-count">
-//       Clicked 0 times
-//     </p>
-//     <img class="img-responsive" id="cat1" src="img/kitten.jpg"></img>
-//   </div>
-//   <div class="col-md-6">
-//     <h2>
-//       Chewie
-//     </h2>
-//     <p id="cat2-count">
-//       Clicked 0 times
-//     </p>
-//     <img class="img-responsive" id="cat2" src="img/chewie.jpg"></img>
-//   </div>
-// </div>
 
 function createDiv(id) {
   var newDiv = document.createElement('div');
