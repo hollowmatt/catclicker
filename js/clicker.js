@@ -71,20 +71,11 @@ $(function(){
     },
 
     addListeners: function() {
-      $('#header').on('click', function(e) {
-        viewList.derender();
-        return false;
-      });
       controller.getCats().forEach(function(cat){
         $('#'+cat.id).on('click', function(e) {
           viewContent.render(cat);
         });
       });
-    },
-
-    derender: function() {
-      var html = '';
-      this.catList.html(html);
     }
   };
 
