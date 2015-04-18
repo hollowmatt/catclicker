@@ -1,31 +1,122 @@
 // clicker.js
 // This is the main JS file for the project
+$(function(){
+  //Model
+  var cats = [
+    {
+      "id" : "1",
+      "name" : "Oscar",
+      "image" : "cat1.jpg",
+      "clicks" : 0
+    },
+    {
+      "id" : "2",
+      "name" : "Fred",
+      "image" : "cat2.jpg",
+      "clicks" : 0
+    },
+    {
+      "id" : "3",
+      "name" : "Peach and Fuzz",
+      "image" : "cat3.jpg",
+      "clicks" : 0
+    },
+    {
+      "id" : "4",
+      "name" : "Bubbles",
+      "image" : "cat4.jpg",
+      "clicks" : 0
+    },
+    {
+      "id" : "5",
+      "name" : "Minnie",
+      "image" : "cat5.jpg",
+      "clicks" : 0
+    }];
 
-// jQuery event handler for click event
-var CATS = 2;
-var CLICK_COUNT = { "cat1": 0, "cat2" : 0 };
+  //Controller
+  var controller = {
+    getCats: function() {
+      return cats;
+    },
 
-for (var i = 0; i < CATS; i++) {
-  var cat = i + 1;
-  var eventID = '#cat' + cat;
-  $('#cats').append(htmlString(cat));
-  console.log(eventID);
-  (function(catCopy){
-    var node = "cat" + catCopy;
-    $("#" + node).click(catCopy,function(e) {
-      CLICK_COUNT["cat" + catCopy] ++;
-      var whichCat = node + '-count';
-      $("#" + whichCat).text("Clicked " + CLICK_COUNT["cat" + catCopy] + " times");
-    });
-  })(cat);
-}
+    increment: function(id) {
+      cats[id].clicks++;
+      viewContent.render(cats[id]);
+    },
 
-// HTML builder
-function htmlString(cat) {
-  var html = '<div id=' + "cat" + cat + ' class="col-md-6">';
-  html += '<h2>' + "Cat " + cat + '</h2>';
-  html += '<p id="cat' + cat + '-count">';
-  html += 'Clicked 0 times </p>';
-  html += '<img class="img-responsive" id="cat' + cat + '" src="img/cat' + cat + '.jpg"></img>';
-  return html;
-}
+    init: function() {
+      viewList.init();
+      viewContent.init();
+    }
+  };
+
+  //View (List)
+  var viewList = {
+    init: function() {
+      this.catList = $('#cat-nav');
+      viewList.render();
+    },
+
+    render: function() {
+      var html = '';
+      controller.getCats().forEach(function(cat){
+        html += "<li>" +
+                "<span id='" + cat.id + "'>" +
+                cat.name + "</a>" +
+                "</span>";
+      });
+      this.catList.html(html);
+      viewList.addListeners();
+    },
+
+    addListeners: function() {
+      $('#header').on('click', function(e) {
+        viewList.derender();
+        return false;
+      });
+      controller.getCats().forEach(function(cat){
+        $('#'+cat.id).on('click', function(e) {
+          viewContent.render(cat);
+        });
+      });
+    },
+
+    derender: function() {
+      var html = '';
+      this.catList.html(html);
+    }
+  };
+
+  //View (Content)
+  var viewContent = {
+    init: function() {
+      this.cat = $('#cat');
+      viewContent.derender();
+    },
+
+    render: function(cat) {
+      viewContent.derender();
+        var html = '<h2>' + "Cat " + cat.name + '</h2>';
+        html += '<p>' + 'Clicked ' +cat.clicks + ' times </p>';
+        html += '<img class="img-responsive" id="cat' + cat.id + '" src="img/' + cat.image + '"></img>';
+        this.cat.html(html);
+        viewContent.addListener(cat.id);
+    },
+
+    addListener: function(id) {
+      $('#cat' + id).click(id, function(e) {
+        controller.increment(id-1);
+      });
+    },
+
+    derender: function() {
+      var html = '';
+      this.cat.html(html);
+    }
+  };
+
+  controller.init();
+});
+
+
