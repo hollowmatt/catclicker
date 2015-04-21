@@ -1,38 +1,34 @@
 // clicker.js
 // This is the main JS file for the project
 $(function(){
-  //Model
-  var cats = [
-    {
-      "id" : "1",
+  //Model - refactor to object, rather than array - for easier search
+  var cats = {
+    "1": {
       "name" : "Oscar",
       "image" : "cat1.jpg",
       "clicks" : 0
     },
-    {
-      "id" : "2",
+    "2": {
       "name" : "Fred",
       "image" : "cat2.jpg",
       "clicks" : 0
     },
-    {
-      "id" : "3",
+    "3": {
       "name" : "Peach and Fuzz",
       "image" : "cat3.jpg",
       "clicks" : 0
     },
-    {
-      "id" : "4",
+    "4": {
       "name" : "Bubbles",
       "image" : "cat4.jpg",
       "clicks" : 0
     },
-    {
-      "id" : "5",
+    "5": {
       "name" : "Minnie",
       "image" : "cat5.jpg",
       "clicks" : 0
-    }];
+    }
+  };
 
   //Controller
   var controller = {
@@ -40,9 +36,15 @@ $(function(){
       return cats;
     },
 
+    getCat: function(id) {
+      var cat = cats[id];
+      viewContent.render(id, cat);
+    },
+
     increment: function(id) {
-      cats[id].clicks++;
-      viewContent.render(cats[id]);
+      var cat = cats[id]
+      cat.clicks++;
+      viewContent.render(id, cat);
     },
 
     init: function() {
@@ -60,22 +62,22 @@ $(function(){
 
     render: function() {
       var html = '';
-      controller.getCats().forEach(function(cat){
+      $.each(controller.getCats(), (function(key, cat){
         html += "<li>" +
-                "<span id='" + cat.id + "'>" +
+                "<span id='" + key + "'>" +
                 cat.name + "</a>" +
                 "</span>";
-      });
+      }));
       this.catList.html(html);
       viewList.addListeners();
     },
 
     addListeners: function() {
-      controller.getCats().forEach(function(cat){
-        $('#'+cat.id).on('click', function(e) {
-          viewContent.render(cat);
+      $.each(controller.getCats(), (function(key, cat){
+        $('#'+key).on('click', function(e) {
+          controller.getCat(key);
         });
-      });
+      }));
     }
   };
 
@@ -86,18 +88,18 @@ $(function(){
       viewContent.derender();
     },
 
-    render: function(cat) {
+    render: function(id, cat) {
       viewContent.derender();
         var html = '<h2>' + "Cat " + cat.name + '</h2>';
         html += '<p>' + 'Clicked ' +cat.clicks + ' times </p>';
-        html += '<img class="img-responsive" id="cat' + cat.id + '" src="img/' + cat.image + '"></img>';
+        html += '<img class="img-responsive" id="cat' + id + '" src="img/' + cat.image + '"></img>';
         this.cat.html(html);
-        viewContent.addListener(cat.id);
+        viewContent.addListener(id);
     },
 
     addListener: function(id) {
       $('#cat' + id).click(id, function(e) {
-        controller.increment(id-1);
+        controller.increment(id);
       });
     },
 
