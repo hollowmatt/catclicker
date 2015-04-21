@@ -58,7 +58,7 @@ $(function(){
   var viewList = {
     init: function() {
       this.catList = $('#cat-nav');
-      viewList.render();
+      this.render();
     },
 
     render: function() {
@@ -70,7 +70,7 @@ $(function(){
                 "</span>";
       }));
       this.catList.html(html);
-      viewList.addListeners();
+      this.addListeners();
     },
 
     addListeners: function() {
@@ -86,7 +86,7 @@ $(function(){
   var viewContent = {
     init: function() {
       this.cat = $('#cat');
-      viewContent.derender();
+      this.derender();
     },
 
     render: function(id, cat) {
@@ -95,7 +95,7 @@ $(function(){
         html += '<p>' + 'Clicked ' +cat.clicks + ' times </p>';
         html += '<img class="img-responsive" id="cat' + id + '" src="img/' + cat.image + '"></img>';
         this.cat.html(html);
-        viewContent.addListener(id);
+        this.addListener(id);
     },
 
     addListener: function(id) {
