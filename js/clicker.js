@@ -48,9 +48,14 @@ $(function(){
       viewContent.render(id, cat);
     },
 
+    showAdminButton: function(id) {
+      viewAdmin.renderButton(id);
+    },
+
     init: function() {
       viewList.init();
       viewContent.init();
+      viewAdmin.init();
     }
   };
 
@@ -96,6 +101,7 @@ $(function(){
         html += '<img class="img-responsive" id="cat' + id + '" src="img/' + cat.image + '"></img>';
         this.cat.html(html);
         this.addListener(id);
+        controller.showAdminButton(id);
     },
 
     addListener: function(id) {
@@ -107,6 +113,32 @@ $(function(){
     derender: function() {
       var html = '';
       this.cat.html(html);
+    }
+  };
+
+  //View (Admin)
+  var viewAdmin = {
+    init: function() {
+      this.admin = $('#admin');
+      this.derender();
+    },
+
+    render: function() {
+      var html = "";
+    },
+
+    renderButton: function(id) {
+      var html ="<button value='" + id + "'>admin</button>";
+      this.admin.html(html);
+    },
+
+    addListener: function() {
+
+    },
+
+    derender: function() {
+      var html = '';
+      this.admin.html(html);
     }
   };
 
