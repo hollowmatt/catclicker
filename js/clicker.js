@@ -1,6 +1,7 @@
 // clicker.js
 // This is the main JS file for the project
 $(function(){
+
   //Model - refactor to object, rather than array - for easier search
   var cats = {
     "1": {
@@ -109,6 +110,7 @@ $(function(){
     }
   };
 
+  //Initiallize
   controller.init();
 });
 
