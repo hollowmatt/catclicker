@@ -1,3 +1,21 @@
 h1 {
   color: navy;
 }
+
+ul {
+  list-style-type: none;
+}
+
+li:hover {
+  color: #4169E1;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.buffer-top {
+  margin-top: 15px;
+}
+
+.buffer-right {
+  margin-right: 5px;
+}
