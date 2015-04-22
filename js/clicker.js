@@ -160,6 +160,7 @@ $(function(){
       });
       $('#submit-cat').click(function(e) {
         controller.updateCat(id, $('#cat-name').val());
+        controller.init();
         controller.getCat(id);
       });
     },
