@@ -42,6 +42,15 @@ $(function(){
       viewContent.render(id, cat);
     },
 
+    getCatAdmin: function(id) {
+      var cat = cats[id];
+      viewAdmin.renderAdminFields(id, cat);
+    },
+
+    updateCat: function(id, name) {
+      cats[id].name = name;
+    },
+
     increment: function(id) {
       var cat = cats[id]
       cat.clicks++;
@@ -128,12 +137,31 @@ $(function(){
     },
 
     renderButton: function(id) {
-      var html ="<button value='" + id + "'>admin</button>";
+      var html ="<button id='admin-" + id + "' value='" + id + "'>admin</button>";
+      html += "<div id='admin-fields' class='buffer-top'>"
       this.admin.html(html);
+      $('#admin-'+id).click(id, function(e) {
+        controller.getCatAdmin(id);
+      });
     },
 
-    addListener: function() {
-
+    renderAdminFields: function(id, cat) {
+      this.adminFields = $('#admin-fields');
+      var html = "<fieldset>";
+      html += "<label class='input-label buffer-right' for='cat-name'>Name: </label>";
+      html += "<input type='text' id='cat-name' placeholder='" + cat.name + "'/>";
+      html += "<br>"
+      html += "<button class='buffer-right' id='submit-cat' value='" + id + "'>submit</button>";
+      html += "<button id='cancel-cat'>cancel</button>";
+      this.adminFields.html(html);
+      $('#cancel-cat').click(function(e) {
+        viewAdmin.derender();
+        controller.getCat(id);
+      });
+      $('#submit-cat').click(function(e) {
+        controller.updateCat(id, $('#cat-name').val());
+        controller.getCat(id);
+      });
     },
 
     derender: function() {

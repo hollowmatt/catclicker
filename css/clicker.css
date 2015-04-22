@@ -11,3 +11,11 @@ li:hover {
   font-weight: bold;
   text-decoration: underline;
 }
+
+.buffer-top {
+  margin-top: 15px;
+}
+
+.buffer-right {
+  margin-right: 5px;
+}
